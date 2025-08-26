@@ -1,5 +1,5 @@
-streamlit
-transformers
-torch
-scikit-learn
-pandas
+streamlit==1.37.0
+transformers==4.44.2
+torch>=2.0
+scikit-learn>=1.5
+pandas>=2.0
