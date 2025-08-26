@@ -1,11 +1,11 @@
-
-
-
 import streamlit as st
 import pandas as pd
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression  # Fixed typo here
+from sklearn.linear_model import LogisticRegression
+
+# ==== Set page config FIRST ====
+st.set_page_config(page_title="AutoBrief", layout="centered")
 
 # ==== 1. Load models and classifier ====
 @st.cache_resource
@@ -41,13 +41,12 @@ def summarize(text):
     return tokenizer.decode(output[0], skip_special_tokens=True)
 
 # ==== 3. Detect bias ====
-def detect_bias(text):  # Fixed function name typo
+def detect_bias(text):
     vec = vectorizer.transform([text])
     prediction = clf.predict(vec)[0]
     return prediction.capitalize()
 
 # ==== 4. Streamlit UI ====
-st.set_page_config(page_title="AutoBrief", layout="centered")
 st.title("📰 AutoBrief: News Summarizer + Bias Detector")
 st.write("Paste a news article below to get a quick summary and predict its political bias.")
 
@@ -59,7 +58,7 @@ if st.button("Analyze"):
     else:
         with st.spinner("Processing..."):
             summary = summarize(input_article)
-            bias = detect_bias(input_article)  # Fixed function name here
+            bias = detect_bias(input_article)
 
         st.subheader("📝 Summary")
         st.success(summary)
